@@ -7,11 +7,11 @@ use app\assets\AppAsset;
         <a href="#">VN</a>
         <a href="#">EN</a>
     </div>
-    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#p-nav">
+    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#collapse-nav">
         &#9776;
     </button>
     <div class="container">
-        <div class="collapse navbar-toggleable-sm text-xs-center">
+        <div class="collapse navbar-toggleable-sm text-xs-center" id="collapse-nav">
             <div class="row nav navbar-nav" id="scrollby-nav">
                 <div class="nav-logo col-md-2 col-md-push-5">
                     <a class="nav-link" href="."><img src="/images/logo.png"></a>
