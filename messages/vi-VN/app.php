@@ -1,5 +1,7 @@
 <?php
 
 return [
-    'Home' => 'Trang chủ'
+    'Home' => 'Trang chủ',
+    'All' => 'Tất cả',
+    'View more' => 'Xem thêm',
 ];

@@ -1,17 +1,34 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-
 $config = [
     'language' => 'vi-VN',
     'id' => 'pinut',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+        'admincp' => [
+            'class' => 'app\modules\admincp\Module',
+        ],
+        'api' => [
+            'class' => 'app\modules\api\Module',
+        ],
+    ],
     'components' => [
         'assetManager' => [
             'appendTimestamp' => true,
             'bundles' => [
                 'yii\web\JqueryAsset' => false,
+            ],
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                '<module:admincp|api>' => '<module>',
+                '<module:admincp|api>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                '<url.*>' => 'site/index',
             ],
         ],
         'request' => [
@@ -21,11 +38,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\modules\admincp\models\User',
             'enableAutoLogin' => true,
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

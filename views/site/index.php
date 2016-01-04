@@ -2,7 +2,7 @@
 
 use app\assets\AppAsset;
 ?>
-<nav class="navbar navbar-dark bg-dark navbar-fixed-top" id="nav">
+<nav class="navbar navbar-dark bg-dark-opacity navbar-fixed-top" id="nav">
     <div class="container p-lang text-xs-right pull-xs-right pull-md-none">
         <a href="#">VN</a>
         <a href="#">EN</a>
@@ -66,76 +66,72 @@ use app\assets\AppAsset;
     </a>
 </div>
 
-<div class="bg-dark welcome" id="about">
+<div class="bg-green welcome" id="about">
     <div class="container text-xs-center">
-        <h1>Xin Chào!</h1>
-        <h4>
+        <p class="text-44"><b>Xin Chào!</b></p>
+        <p class="text-24">
             "Phát triển cùng tự nhiên. Công ty TNHH Pinut được thành lập năm 2015
             với lĩnh vực hoạt động của công ty là sản xuất kinh doanh thực phẩm
             có nguồn gốc tự nhiên..."
-        </h4>
+        </p>
         <a href="#" class="logo-btn"></a>
     </div>
 </div>
 <div class="product" id="product">
     <div class="container text-xs-center">
-        <h1>Sản phẩm</h1>
-        <h4>
+        <p class="text-44"><b>Sản phẩm</b></p>
+        <p class="text-24">
             "Sản phẩm tiêu biểu của Pinut..."
-        </h4>
+        </p>
         <div class="product-content">
             <div class="heading clearfix">
                 <div class="pull-left">
                     <ul class="clearfix">
-                        <li><a href="#">Tất cả</a></li>
-                        <li><a href="#">Dòng gói</a></li>
-                        <li><a href="#">Dòng hộp</a></li>
-                        <li><a href="#">Dòng quà tặng</a></li>
-                        <li><a href="#">Trái cây sấy</a></li>
-                        <li><a href="#">Bánh kẹo</a></li>
+                        <li><a href="#" ng-click="main.setCategory($event)"><?= Yii::t('app', 'All') ?></a></li>
+                        <li ng-repeat="category in main.categories">
+                            <a href="#" ng-click="main.setCategory($event, category.id)">{{ category.title}}</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="pull-right navigator">
-                    <a href="#"><i class="fa fa-chevron-left"></i></a>
-                    <a href="#"><i class="fa fa-chevron-right"></i></a>
+                    <a href="#" ng-click="main.prevPage($event)"><i class="fa fa-chevron-left"></i></a>
+                    <a href="#" ng-click="main.nextPage($event)"><i class="fa fa-chevron-right"></i></a>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4">
-                    <a href="#" class="product-item">
-                        <img src="/images/product-1.jpg" class="img-fluid">
+                <div class="col-sm-4" ng-repeat="product in main.filtered = (main.products| filter:{category_id: main.selectedCategory})"
+                     ng-if="$index >= main.pageIndex && $index < main.pageIndex + main.pageSize">
+                    <a href="#" class="product-item" ng-click="main.detailProduct($event, $index)">
+                        <img ng-src="{{ product.thumbnail}}" class="img-fluid">
                         <div class="hover-content animated fadeIn">
-                            <h4 class="title">Dòng gói</h4>
-                            <div>
-                                <span class="logo-btn"></span><br>
-                                Xem thêm
+                            <div class="wrapper">
+                                <h4 class="title">{{ product.title}}</h4>
+                                <div>
+                                    <span class="logo-btn"></span><br>
+                                    <?= Yii::t('app', 'View more') ?>
+                                </div>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-4">
-                    <a href="#" class="product-item">
-                        <img src="/images/product-1.jpg" class="img-fluid">
-                        <div class="hover-content animated fadeIn">
-                            <h4 class="title">Dòng gói</h4>
-                            <div>
-                                <span class="logo-btn"></span><br>
-                                Xem thêm
+                <div class="modal fade" id="product-detail" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">{{ main.products[main.selectedProduct].title}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <em>{{ main.products[main.selectedProduct].summary}}</em>
+                                <div ng-bind-html="main.products[main.selectedProduct].content"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
                             </div>
                         </div>
-                    </a>
-                </div>
-                <div class="col-sm-4">
-                    <a href="#" class="product-item">
-                        <img src="/images/product-1.jpg" class="img-fluid">
-                        <div class="hover-content animated fadeIn">
-                            <h4 class="title">Dòng gói</h4>
-                            <div>
-                                <span class="logo-btn"></span><br>
-                                Xem thêm
-                            </div>
-                        </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -143,8 +139,8 @@ use app\assets\AppAsset;
 </div>
 <div class="partners" id="distribution">
     <div class="container text-xs-center">
-        <h1>Đối tác</h1>
-        <p class="partners-content">
+        <p class="text-44"><b>Đối tác</b></p>
+        <p class="partners-content text-24">
             "Phát triển cùng tự nhiên. Công ty TNHH Pinut được thành lập năm 2015
             với lĩnh vực hoạt động của công ty là sản xuất kinh doanh thực phẩm
             có nguồn gốc tự nhiên..."
@@ -156,7 +152,7 @@ use app\assets\AppAsset;
         <div class="row">
             <div class="col-sm-4">
                 <div class="news-content text-xs-center">
-                    <h3>Tin tức - Hoạt động</h3>
+                    <p class="heading">Tin tức - Hoạt động</p>
                     <p>
                         "Phát triển cùng tự nhiên. Công ty TNHH Pinut được thành lập năm 2015
                         với lĩnh vực hoạt động của công ty..."
@@ -205,7 +201,7 @@ use app\assets\AppAsset;
     </div>
 </div>
 <div class="map">
-    <div id="googleMap" style="width: 100%; min-height: 320px"></div>
+    <div id="googleMap" style="width: 100%; min-height: 350px"></div>
 </div>
 <footer class="bg-dark">
     <div class="logo-footer"></div>
@@ -257,7 +253,7 @@ use app\assets\AppAsset;
 $this->registerJsFile('http://maps.googleapis.com/maps/api/js', ['depends' => AppAsset::className()]);
 $this->registerJs("
     function initialize() {
-        var myLatlng = new google.maps.LatLng(10.788690, 106.695579);
+        var myLatlng = new google.maps.LatLng(10.8444856, 106.6722255);
         var mapProp = {
             center: myLatlng,
             zoom: 18,
@@ -268,22 +264,21 @@ $this->registerJs("
         var marker = new google.maps.Marker({
             position: myLatlng,
             map: map,
-            title: 'Lavender'
+            title: 'Pinut',
+            icon: '/images/logo-map.png'
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
-    $('.product').waypoint(function(direction) {
-        if (direction === 'down') {
-            $('.product-item').each(function (index) {
-                var elm = $(this);
-                setTimeout(function () {
-                    elm.addClass('animated flipInY');
-                }, index * 100);
-            });
-        }
-    }, {
-        offset: 380
-    });
+//    $('.product').waypoint(function(direction) {
+//        $('.product-item').each(function (index) {
+//            var elm = $(this);
+//            setTimeout(function () {
+//                elm.addClass('animated flipInY');
+//            }, index * 100);
+//        });
+//    }, {
+//        offset: 380
+//    });
     $('.news').waypoint(function(direction) {
         if (direction === 'down') {
             $('.news-content').addClass('animated slideInUp');
@@ -297,5 +292,13 @@ $this->registerJs("
         var offset = $('#nav').height() + 8;
         var top = $(elm).offset().top - offset;
         $('html, body').animate({ scrollTop: top }, 600);
+    });
+    $(window).scroll(function () {
+        var top = $('#nav').offset().top;
+        if (top > 150) {
+            $('#nav').addClass('minimize');
+        } else if (top === 0) {
+            $('#nav').removeClass('minimize');
+        }
     });
 ");

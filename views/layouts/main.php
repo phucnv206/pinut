@@ -7,7 +7,7 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->language ?>" ng-app="pinut">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,7 @@ AppAsset::register($this);
         <title><?= Yii::$app->params['title'] ?></title>
         <?php $this->head() ?>
     </head>
-    <body data-spy="scroll" data-target="#scrollby-nav">
+    <body data-spy="scroll" data-target="#scrollby-nav" ng-controller="MainController as main">
         <?php $this->beginBody() ?>
             <?= $content ?>
         <?php $this->endBody() ?>
