@@ -25,13 +25,19 @@ use yii\widgets\ActiveForm;
         ) ?>
         <div class="tab-pane active" id="vi" role="tabpanel">
             <?= $form->field($model, 'titleVi')->textInput() ?>
-            <?= $form->field($model, 'thumbnailVi')->textInput() ?>
+            <?= $form->field($model, 'thumbnailVi', [
+                'inputOptions' => ['id' => 'browse-img-vi', 'class' => 'form-control'],
+                'template' => '{label}<div class="input-group">{input}<span class="input-group-btn"><button type="button" id="browse-btn-vi" class="btn btn-default"><i class="fa fa-search"></i></a></span></div>'
+            ])->textInput(['maxlength' => 255]) ?>
             <?= $form->field($model, 'summaryVi')->textarea() ?>
             <?= $form->field($model, 'contentVi')->textarea(['class' => 'content-area']) ?>
         </div>
         <div class="tab-pane" id="en" role="tabpanel">
             <?= $form->field($model, 'titleEn')->textInput() ?>
-            <?= $form->field($model, 'thumbnailEn')->textInput() ?>
+            <?= $form->field($model, 'thumbnailEn', [
+                'inputOptions' => ['id' => 'browse-img-en', 'class' => 'form-control'],
+                'template' => '{label}<div class="input-group">{input}<span class="input-group-btn"><button type="button" id="browse-btn-en" class="btn btn-default"><i class="fa fa-search"></i></a></span></div>'
+            ])->textInput(['maxlength' => 255]) ?>
             <?= $form->field($model, 'summaryEn')->textarea() ?>
             <?= $form->field($model, 'contentEn')->textarea(['class' => 'content-area']) ?>
         </div>
@@ -61,4 +67,22 @@ $this->registerJs("
         filemanager_title: 'Quản lý tập tin',
         external_plugins: {'filemanager': '/js/filemanager/plugin.min.js'}
     });
+    $('#browse-btn-vi').click(function () {
+        var url = '/js/filemanager/dialog.php?type=1&popup=1&field_id=browse-img-vi';
+        open_popup(url);
+
+    });
+    $('#browse-btn-en').click(function () {
+        var url = '/js/filemanager/dialog.php?type=1&popup=1&field_id=browse-img-en';
+        open_popup(url);
+
+    });
+    function open_popup(url)
+    {
+        var w = 880;
+        var h = 570;
+        var l = Math.floor((screen.width - w) / 2);
+        var t = Math.floor((screen.height - h) / 2);
+        window.open(url, 'Media Manager', 'scrollbars=1,width=' + w + ',height=' + h + ',top=' + t + ',left=' + l);
+    }
 ");

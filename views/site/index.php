@@ -4,8 +4,8 @@ use app\assets\AppAsset;
 ?>
 <nav class="navbar navbar-dark bg-dark-opacity navbar-fixed-top" id="nav">
     <div class="container p-lang text-xs-right pull-xs-right pull-md-none">
-        <a href="#">VN</a>
-        <a href="#">EN</a>
+        <a href="#" ng-click="main.changeLanguage('vi')">VN</a>
+        <a href="#" ng-click="main.changeLanguage('en')">EN</a>
     </div>
     <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#collapse-nav">
         &#9776;
@@ -49,18 +49,16 @@ use app\assets\AppAsset;
 
 <div id="home" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active">
-            <img src="/images/slide.jpg" class="center-block">
-        </div>
-        <div class="carousel-item">
-            <img src="/images/slide.jpg" class="center-block">
+        <div ng-repeat="slide in main.slides" class="carousel-item" ng-class="{'active': $first}">
+            <a ng-show="slide.url.length > 0" href="{{ slide.url }}" target="_blank"><img src="{{ slide.image }}" class="center-block"></a>
+            <img src="{{ slide.image }}" class="center-block" ng-hide="slide.url.length > 0">
         </div>
     </div>
-    <a class="left carousel-control" href="#p-slide" role="button" data-slide="prev">
+    <a class="left carousel-control" href="#home" role="button" data-slide="prev">
         <span class="icon-prev" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="right carousel-control" href="#p-slide" role="button" data-slide="next">
+    <a class="right carousel-control" href="#home" role="button" data-slide="next">
         <span class="icon-next" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
@@ -99,7 +97,7 @@ use app\assets\AppAsset;
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4" ng-repeat="product in main.filtered = (main.products| filter:{category_id: main.selectedCategory})"
+                <div class="col-md-6 col-lg-4" ng-repeat="product in main.filtered = (main.products| filter:{category_id: main.selectedCategory})"
                      ng-if="$index >= main.pageIndex && $index < main.pageIndex + main.pageSize">
                     <a href="#" class="product-item" ng-click="main.detailProduct($event, $index)">
                         <img ng-src="{{ product.thumbnail}}" class="img-fluid">
@@ -269,16 +267,7 @@ $this->registerJs("
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
-//    $('.product').waypoint(function(direction) {
-//        $('.product-item').each(function (index) {
-//            var elm = $(this);
-//            setTimeout(function () {
-//                elm.addClass('animated flipInY');
-//            }, index * 100);
-//        });
-//    }, {
-//        offset: 380
-//    });
+    
     $('.news').waypoint(function(direction) {
         if (direction === 'down') {
             $('.news-content').addClass('animated slideInUp');

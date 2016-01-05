@@ -21,6 +21,15 @@ class LoginForm extends Model
             ['password', 'validatePassword'],
         ];
     }
+    
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Tài khoản',
+            'password' => 'Mật khẩu',
+            'rememberMe' => 'Ghi nhớ'
+        ];
+    }
 
     public function validatePassword($attribute, $params)
     {

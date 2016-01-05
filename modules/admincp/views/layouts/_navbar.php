@@ -28,7 +28,7 @@ use yii\helpers\Url;
                 </li>
             <?php else: ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="<?= Url::toRoute('user/index') ?>">
                         <i class="fa fa-user"></i>
                         <?= Yii::$app->user->identity->username ?>
                     </a>

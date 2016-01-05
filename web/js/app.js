@@ -1,13 +1,30 @@
 (function () {
     var app = angular.module('pinut', ['ngSanitize']);
-    app.controller('MainController', function ($http) {
+    app.controller('MainController', function ($http, $window, $location) {
+        var waypoints = $('.product').waypoint(function(direction) {
+            $('.product-item').each(function (index) {
+                var elm = $(this);
+                setTimeout(function () {
+                    elm.addClass('animated flipInY');
+                }, index * 100);
+            });
+        }, {
+            offset: 380
+        });
         var self = this;
         self.init = function () {
             self.selectedCategory = undefined;
             self.pageIndex = 0;
             self.pageSize = 3;
+            self.apiListSlide();
             self.apiListCategory();
             self.apiListProduct();
+        };
+        self.apiListSlide = function () {
+            $http.get('/api/slide/list').then(function successCallback(response) {
+                self.slides = response.data;
+            }, function errorCallback(response) {
+            });
         };
         self.apiListCategory = function () {
             $http.get('/api/category/list').then(function successCallback(response) {
@@ -42,6 +59,9 @@
             if (self.pageIndex > 0) {
                 self.pageIndex--;
             }
+        };
+        self.changeLanguage = function (lang) {
+            $window.location.href = '/location?lang=' + lang + '&return=' + $location.path();
         };
         self.init();
     });

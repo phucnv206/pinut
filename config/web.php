@@ -28,6 +28,7 @@ $config = [
             'rules' => [
                 '<module:admincp|api>' => '<module>',
                 '<module:admincp|api>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                'location' => 'site/location',
                 '<url.*>' => 'site/index',
             ],
         ],
