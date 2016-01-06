@@ -19,11 +19,11 @@ class SiteController extends Controller
         return $this->render('index');
     }
     
-    public function actionLocation($lang = 'vi', $returnUrl = '/')
+    public function actionLocation($lang = 'vi')
     {
         $sessLang = $lang === 'vi' ? 'vi-VN' : 'en-US';
         Yii::$app->session->set('lang', $sessLang);
-        return $this->redirect($returnUrl);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 }

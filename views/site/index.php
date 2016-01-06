@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use app\assets\AppAsset;
 ?>
 <nav class="navbar navbar-dark bg-dark-opacity navbar-fixed-top" id="nav">
@@ -14,7 +15,7 @@ use app\assets\AppAsset;
         <div class="collapse navbar-toggleable-sm text-xs-center" id="collapse-nav">
             <div class="row nav navbar-nav" id="scrollby-nav">
                 <div class="nav-logo col-md-2 col-md-push-5">
-                    <a class="nav-link" href="."><img src="/images/logo.png"></a>
+                    <a class="nav-link" href="<?= Url::home(true) ?>"><img src="/images/logo.png"></a>
                 </div>
                 <div class="p-nav-item col-md-5 col-md-pull-2">
                     <div class="row">
@@ -275,7 +276,7 @@ $this->registerJs("
     }, {
         offset: 380
     });
-    $('.nav-link').click(function (e) {
+    $('.p-nav-item .nav-link').click(function (e) {
         e.preventDefault();
         var elm = $(this).attr('href');
         var offset = $('#nav').height() + 8;
