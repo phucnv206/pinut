@@ -29,7 +29,7 @@ class ContactController extends Controller
         $model = new ContactForm();
         $model->attributes = Yii::$app->request->post();
         if ($model->validate()) {
-            Yii::$app->mailer->compose(['contact', 'model' => $model])
+            Yii::$app->mailer->compose('contact', ['model' => $model])
             ->setFrom(Yii::$app->params['mailUser'])
             ->setTo($user->email)
             ->setSubject('Thông tin liên hệ - Pinut')

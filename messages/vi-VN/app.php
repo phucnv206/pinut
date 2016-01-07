@@ -15,4 +15,5 @@ return [
     'Phone' => 'Điện Thoại',
     'Message' => 'Nội Dung',
     'Submit' => 'Gửi',
+    'Close' => 'Đóng',
 ];
