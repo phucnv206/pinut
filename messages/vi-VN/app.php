@@ -16,4 +16,5 @@ return [
     'Message' => 'Nội Dung',
     'Submit' => 'Gửi',
     'Close' => 'Đóng',
+    'Message has been sent successfully!' => 'Gửi liên hệ thành công!',
 ];

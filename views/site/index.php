@@ -151,8 +151,9 @@ use app\assets\AppAsset;
             </div>
             <div class="col-sm-7">
                 <form class="contact-form" ng-submit="main.sendContact()">
-                    <div class="error-message" ng-show="main.contactErrors.length > 0">
+                    <div class="error-message" ng-show="main.contactErrors.length > 0 || main.contactMessage.length > 0">
                         <div ng-repeat="error in main.contactErrors">{{ error }}</div>
+                        {{ main.contactMessage }}
                     </div>
                     <fieldset class="form-group">
                         <input type="text" ng-model="main.contact.company" class="form-control" placeholder="<?= Yii::t('app', 'Your Company') ?>"

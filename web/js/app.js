@@ -84,16 +84,13 @@
             self.contact[$('meta[name=csrf-param]').attr('content')] = $('meta[name=csrf-token]').attr('content');
             self.contactSubmitting = true;
             self.contactErrors = [];
+            self.contactMessage = '';
             $http.post('/api/contact/send', self.contact).then(function successCallback(response) {
                 var data = response.data;
                 if ('errors' in data) {
                     angular.forEach(data.errors, function(value, key) {
                         this.push(value);
                     }, self.contactErrors);
-                    $('.error-message').fadeIn();
-                    $timeout(function () {
-                        $('.error-message').fadeOut();
-                    }, 3000);
                 } else {
                     self.contact = {
                         company: '',
@@ -101,7 +98,12 @@
                         phone: '',
                         message: ''
                     };
+                    self.contactMessage = data.message;
                 }
+                $('.error-message').fadeIn();
+                $timeout(function () {
+                    $('.error-message').fadeOut();
+                }, 3000);
                 self.contactSubmitting = false;
             }, function errorCallback(response) {
                 self.contactSubmitting = false;

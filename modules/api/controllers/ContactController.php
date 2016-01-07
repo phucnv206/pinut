@@ -34,7 +34,7 @@ class ContactController extends Controller
             ->setTo($user->email)
             ->setSubject('Thông tin liên hệ - Pinut')
             ->send();
-            return ['success' => true];
+            return ['message' => Yii::t('app', 'Message has been sent successfully!')];
         }
         return ['errors' => $model->firstErrors];
     }
