@@ -13,9 +13,6 @@ class SiteController extends Controller
         if (!$test) {
             die('Coming soon...');
         }
-        if (Yii::$app->session->has('lang')) {
-            Yii::$app->language = Yii::$app->session->get('lang');
-        }
         return $this->render('index');
     }
     

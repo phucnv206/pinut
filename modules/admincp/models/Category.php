@@ -77,6 +77,7 @@ class Category extends \yii\db\ActiveRecord
     {
         if (parent::beforeDelete()) {
             CategoryDetail::deleteAll(['category_id' => $this->id]);
+            Product::deleteAll(['category_id' => $this->id]);
             return true;
         } else {
             return false;

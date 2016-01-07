@@ -37,6 +37,9 @@ body.modal-open {
 .text-24 {
     font-size: 24px;
 }
+.text-18 {
+    font-size: 18px;
+}
 .navbar {
     padding-top: 0;
     border-radius: 0;
@@ -85,6 +88,21 @@ body.modal-open {
 }
 .logo-btn:hover {
     opacity: 1;
+}
+.loader {
+    position: fixed;
+    background-color: #000;
+    z-index: 1030;
+    color: #FFF;
+    margin: auto;
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.loader .wrapper {
+    display: table-cell;
+    vertical-align: middle;
 }
 .product {
     padding: 30px 0 50px 0;
@@ -197,6 +215,17 @@ body.modal-open {
 .contact .contact-form {
     background-color: #010101;
     padding: 20px;
+    position: relative;
+}
+.contact .contact-form .error-message {
+    position: absolute;
+    background-color: rgba(255,255,255,.5);
+    padding: 15px;
+    width: 320px;
+    left: 50%;
+    margin-left: -160px;
+    top: 15px;
+    display: none;
 }
 .contact .contact-form .form-group {
     margin-bottom: 5px;

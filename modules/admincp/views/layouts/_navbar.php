@@ -18,6 +18,7 @@ use yii\helpers\Url;
                     <a class="dropdown-item" href="<?= Url::toRoute('slide/index') ?>">Slide</a>
                     <a class="dropdown-item" href="<?= Url::toRoute('category/index') ?>">Danh mục</a>
                     <a class="dropdown-item" href="<?= Url::toRoute('product/index') ?>">Sản phẩm</a>
+                    <a class="dropdown-item" href="<?= Url::toRoute('page/index') ?>">Nội dung</a>
                 </div>
             </li>
         </ul>

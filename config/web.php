@@ -5,7 +5,7 @@ $config = [
     'language' => 'vi-VN',
     'id' => 'pinut',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'init'],
     'modules' => [
         'admincp' => [
             'class' => 'app\modules\admincp\Module',
@@ -15,6 +15,9 @@ $config = [
         ],
     ],
     'components' => [
+        'init'=>[
+            'class'=>'app\components\Init'
+        ],
         'assetManager' => [
             'appendTimestamp' => true,
             'bundles' => [
@@ -44,7 +47,15 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'pinut.com.vn@gmail.com',
+                'password' => 'C0nM3o123',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -55,6 +66,17 @@ $config = [
                 ],
             ],
         ],
+//        'log' => [
+//            'traceLevel' => YII_DEBUG ? 3 : 0,
+//            'targets' => [
+//                [
+//                    'class' => 'yii\log\FileTarget',
+//                    'levels' => ['error', 'warning', 'info'],
+//                    'categories' => ['yii\db\Command::query'],
+//                    'logVars' => [],
+//                ],
+//            ],
+//        ],
         'db' => require(__DIR__ . '/db.php'),
     ],
     'params' => $params,

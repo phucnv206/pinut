@@ -47,7 +47,11 @@ use app\assets\AppAsset;
         </div>
     </div>
 </nav>
-
+<div class="loader" ng-hide="main.loaded">
+    <div class="wrapper">
+        <i class="fa fa-spinner fa-pulse fa-2x"></i>
+    </div>
+</div>
 <div id="home" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
         <div ng-repeat="slide in main.slides" class="carousel-item" ng-class="{'active': $first}">
@@ -67,21 +71,15 @@ use app\assets\AppAsset;
 
 <div class="bg-green welcome" id="about">
     <div class="container text-xs-center">
-        <p class="text-44"><b>Xin Chào!</b></p>
-        <p class="text-24">
-            "Phát triển cùng tự nhiên. Công ty TNHH Pinut được thành lập năm 2015
-            với lĩnh vực hoạt động của công ty là sản xuất kinh doanh thực phẩm
-            có nguồn gốc tự nhiên..."
-        </p>
-        <a href="#" class="logo-btn"></a>
+        <p class="text-44"><b>{{ main.pages[1].title }}</b></p>
+        <p class="text-24">{{ main.pages[1].summary }}</p>
+        <a href="#" ng-click="main.detailPage($event, 1)" class="logo-btn"></a>
     </div>
 </div>
 <div class="product" id="product">
     <div class="container text-xs-center">
-        <p class="text-44"><b>Sản phẩm</b></p>
-        <p class="text-24">
-            "Sản phẩm tiêu biểu của Pinut..."
-        </p>
+        <p class="text-44"><b>{{ main.pages[2].title }}</b></p>
+        <p class="text-18">{{ main.pages[2].summary }}</p>
         <div class="product-content">
             <div class="heading clearfix">
                 <div class="pull-left">
@@ -113,37 +111,14 @@ use app\assets\AppAsset;
                         </div>
                     </a>
                 </div>
-                <div class="modal fade" id="product-detail" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title">{{ main.products[main.selectedProduct].title}}</h4>
-                            </div>
-                            <div class="modal-body">
-                                <em>{{ main.products[main.selectedProduct].summary}}</em>
-                                <div ng-bind-html="main.products[main.selectedProduct].content"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="partners" id="distribution">
     <div class="container text-xs-center">
-        <p class="text-44"><b>Đối tác</b></p>
-        <p class="partners-content text-24">
-            "Phát triển cùng tự nhiên. Công ty TNHH Pinut được thành lập năm 2015
-            với lĩnh vực hoạt động của công ty là sản xuất kinh doanh thực phẩm
-            có nguồn gốc tự nhiên..."
-        </p>
+        <p class="text-44"><b>{{ main.pages[3].title }}</b></p>
+        <p class="partners-content text-24">{{ main.pages[3].summary }}</p>
     </div>
 </div>
 <div class="news">
@@ -151,12 +126,9 @@ use app\assets\AppAsset;
         <div class="row">
             <div class="col-sm-4">
                 <div class="news-content text-xs-center">
-                    <p class="heading">Tin tức - Hoạt động</p>
-                    <p>
-                        "Phát triển cùng tự nhiên. Công ty TNHH Pinut được thành lập năm 2015
-                        với lĩnh vực hoạt động của công ty..."
-                    </p>
-                    <a href="#" class="logo-btn"></a>
+                    <p class="heading">{{ main.pages[4].title }}</p>
+                    <p>{{ main.pages[4].summary }}</p>
+                    <a href="#" ng-click="main.detailPage($event, 4)" class="logo-btn"></a>
                 </div>
             </div>
         </div>
@@ -164,10 +136,8 @@ use app\assets\AppAsset;
 </div>
 <div class="contact bg-dark" id="contact">
     <div class="container text-xs-center">
-        <h1>Liên hệ</h1>
-        <h4>
-            Chúng tôi luôn sẵn sàng đón tiếp
-        </h4>
+        <p class="text-44"><?= Yii::t('app', 'Contact') ?></p>
+        <p class="text-24"><?= Yii::t('app', 'We are waiting to serving you') ?></p>
     </div>
     <div class="container contact-content">
         <div class="row">
@@ -180,20 +150,30 @@ use app\assets\AppAsset;
                 </div>
             </div>
             <div class="col-sm-7">
-                <form class="contact-form">
+                <form class="contact-form" ng-submit="main.sendContact()">
+                    <div class="error-message" ng-show="main.contactErrors.length > 0">
+                        <div ng-repeat="error in main.contactErrors">{{ error }}</div>
+                    </div>
                     <fieldset class="form-group">
-                        <input type="email" class="form-control" placeholder="Tên Công Ty">
+                        <input type="text" ng-model="main.contact.company" class="form-control" placeholder="<?= Yii::t('app', 'Your Company') ?>"
+                               ng-disabled="main.contactSubmitting">
                     </fieldset>
                     <fieldset class="form-group">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" ng-model="main.contact.email" class="form-control" placeholder="<?= Yii::t('app', 'Email') ?>"
+                               ng-disabled="main.contactSubmitting">
                     </fieldset>
                     <fieldset class="form-group">
-                        <input type="email" class="form-control" placeholder="Điện Thoại">
+                        <input type="text" ng-model="main.contact.phone" class="form-control" placeholder="<?= Yii::t('app', 'Phone') ?>"
+                               ng-disabled="main.contactSubmitting">
                     </fieldset>
                     <fieldset class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="Nội Dung"></textarea>
+                        <textarea ng-model="main.contact.message" class="form-control" rows="3" placeholder="<?= Yii::t('app', 'Message') ?>"
+                                  ng-disabled="main.contactSubmitting"></textarea>
                     </fieldset>
-                    <div class="text-xs-right"><button type="button" class="btn btn-link">Gửi</button></div>
+                    <div class="text-xs-right">
+                        <i class="fa fa-refresh fa-spin" ng-show="main.contactSubmitting"></i>
+                        <button ng-disabled="main.contactSubmitting" type="submit" class="btn btn-link"><?= Yii::t('app', 'Submit') ?></button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -248,6 +228,44 @@ use app\assets\AppAsset;
         </div>
     </div>
 </footer>
+<div class="modal fade" id="product-detail" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{ main.products[main.selectedProduct].title}}</h4>
+            </div>
+            <div class="modal-body">
+                <em>{{ main.products[main.selectedProduct].summary}}</em>
+                <div ng-bind-html="main.products[main.selectedProduct].content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="page-detail" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{ main.pages[main.selectedPage].title}}</h4>
+            </div>
+            <div class="modal-body">
+                <em>{{ main.pages[main.selectedPage].summary}}</em>
+                <div ng-bind-html="main.pages[main.selectedPage].content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $this->registerJsFile('http://maps.googleapis.com/maps/api/js', ['depends' => AppAsset::className()]);
 $this->registerJs("
