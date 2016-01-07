@@ -9,7 +9,7 @@ return [
     'Distribution' => 'Phân phối',
     'Design' => 'Thiết kế',
     'Contact' => 'Liên hệ',
-    'We are waiting to serving you', 'Chúng tôi luôn sẵn sàng đón tiếp',
+    'We are waiting to serving you' => 'Chúng tôi luôn sẵn sàng đón tiếp',
     'Your Company' => 'Tên Công Ty',
     'Email' => 'Email',
     'Phone' => 'Điện Thoại',
