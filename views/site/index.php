@@ -115,13 +115,13 @@ use app\assets\AppAsset;
         </div>
     </div>
 </div>
-<div class="partners" id="distribution">
+<div class="partners" id="distribution" style="background-image: url('{{ main.pages[3].thumbnail }}')">
     <div class="container text-xs-center">
         <p class="text-44"><b>{{ main.pages[3].title }}</b></p>
         <p class="partners-content text-24">{{ main.pages[3].summary }}</p>
     </div>
 </div>
-<div class="news">
+<div class="news" style="background-image: url('{{ main.pages[4].thumbnail }}')">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">

@@ -33,6 +33,8 @@ class PageController extends Controller
         $model = null;
         if (!empty($id)) {
             $model = $this->findModel($id);
+            $model->titleVi = $model->details[0]->title;
+            $model->titleEn = $model->details[1]->title;
             $model->thumbnailVi = $model->details[0]->thumbnail;
             $model->thumbnailEn = $model->details[1]->thumbnail;
             $model->summaryVi = $model->details[0]->summary;

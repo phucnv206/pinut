@@ -2,12 +2,14 @@
     var app = angular.module('pinut', ['ngSanitize']);
     app.controller('MainController', function ($http, $window, $location, $timeout) {
         var waypoints = $('.product').waypoint(function(direction) {
-            $('.product-item').each(function (index) {
-                var elm = $(this);
-                $timeout(function () {
-                    elm.addClass('animated flipInY');
-                }, index * 100);
-            });
+            if (direction === 'down') {
+                $('.product-item').each(function (index) {
+                    var elm = $(this);
+                    $timeout(function () {
+                        elm.addClass('animated flipInY');
+                    }, index * 100);
+                });
+            }
         }, {
             offset: 380
         });
