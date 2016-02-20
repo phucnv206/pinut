@@ -1,10 +1,9 @@
 <?php
 
-use app\modules\admincp\models\Page;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-<div class="page-form">
+<div class="post-form">
     <?php
     $form = ActiveForm::begin([
         'enableClientScript' => false,
@@ -23,38 +22,28 @@ use yii\widgets\ActiveForm;
     <div class="tab-content">
         <div class="tab-pane active" id="vi" role="tabpanel">
             <?= $form->field($model, 'titleVi')->textInput() ?>
-            <?php if ($model->id !== Page::PAGE_ABOUT && $model->id !== Page::PAGE_PRODUCT && $model->id !== Page::PAGE_NEWS): ?>
-                <?= $form->field($model, 'thumbnailVi', [
-                    'inputOptions' => ['id' => 'browse-img-vi', 'class' => 'form-control'],
-                    'template' => '{label}<div class="input-group">{input}<span class="input-group-btn"><button type="button" id="browse-btn-vi" class="btn btn-default"><i class="fa fa-search"></i></a></span></div>'
-                ])->textInput(['maxlength' => 255]) ?>
-            <?php endif; ?>
-            <?php if ($model->id !== Page::PAGE_PARTNER && $model->id !== Page::PAGE_NEWS): ?>
-                <?= $form->field($model, 'summaryVi')->textarea() ?>
-            <?php endif; ?>
-            <?php if ($model->id !== Page::PAGE_PRODUCT && $model->id !== Page::PAGE_NEWS): ?>
-                <?= $form->field($model, 'contentVi')->textarea(['class' => 'content-area']) ?>
-            <?php endif; ?>
+            <?= $form->field($model, 'thumbnailVi', [
+                'inputOptions' => ['id' => 'browse-img-vi', 'class' => 'form-control'],
+                'template' => '{label}<div class="input-group">{input}<span class="input-group-btn"><button type="button" id="browse-btn-vi" class="btn btn-default"><i class="fa fa-search"></i></a></span></div>'
+            ])->textInput(['maxlength' => 255]) ?>
+            <?= $form->field($model, 'summaryVi')->textarea() ?>
+            <?= $form->field($model, 'contentVi')->textarea(['class' => 'content-area']) ?>
         </div>
         <div class="tab-pane" id="en" role="tabpanel">
             <?= $form->field($model, 'titleEn')->textInput() ?>
-            <?php if ($model->id !== Page::PAGE_ABOUT && $model->id !== Page::PAGE_PRODUCT && $model->id !== Page::PAGE_NEWS): ?>
-                <?= $form->field($model, 'thumbnailEn', [
-                    'inputOptions' => ['id' => 'browse-img-en', 'class' => 'form-control'],
-                    'template' => '{label}<div class="input-group">{input}<span class="input-group-btn"><button type="button" id="browse-btn-en" class="btn btn-default"><i class="fa fa-search"></i></a></span></div>'
-                ])->textInput(['maxlength' => 255]) ?>
-            <?php endif; ?>
-            <?php if ($model->id !== Page::PAGE_PARTNER && $model->id !== Page::PAGE_NEWS): ?>
-                <?= $form->field($model, 'summaryEn')->textarea() ?>
-            <?php endif; ?>
-            <?php if ($model->id !== Page::PAGE_PRODUCT && $model->id !== Page::PAGE_NEWS): ?>
-                <?= $form->field($model, 'contentEn')->textarea(['class' => 'content-area']) ?>
-            <?php endif; ?>
+            <?= $form->field($model, 'thumbnailEn', [
+                'inputOptions' => ['id' => 'browse-img-en', 'class' => 'form-control'],
+                'template' => '{label}<div class="input-group">{input}<span class="input-group-btn"><button type="button" id="browse-btn-en" class="btn btn-default"><i class="fa fa-search"></i></a></span></div>'
+            ])->textInput(['maxlength' => 255]) ?>
+            <?= $form->field($model, 'summaryEn')->textarea() ?>
+            <?= $form->field($model, 'contentEn')->textarea(['class' => 'content-area']) ?>
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton('Cập nhật', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Hủy bỏ', ['index'], ['class' => 'btn btn-link']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?php if (!$model->isNewRecord): ?>
+            <?= Html::a('Hủy bỏ', ['index'], ['class' => 'btn btn-link']) ?>
+        <?php endif; ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

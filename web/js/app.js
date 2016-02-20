@@ -1,7 +1,8 @@
 (function () {
     var app = angular.module('pinut', ['ngSanitize']);
     app.controller('MainController', function ($http, $window, $location, $timeout) {
-        var waypoints = $('.product').waypoint(function(direction) {
+//        ---- register jquery
+        $('.product').waypoint(function(direction) {
             if (direction === 'down') {
                 $('.product-item').each(function (index) {
                     var elm = $(this);
@@ -13,6 +14,22 @@
         }, {
             offset: 380
         });
+        $('.p-nav-item .nav-link').click(function (e) {
+            e.preventDefault();
+            var elm = $(this).attr('href');
+            var offset = $('#nav').height() + 8;
+            var top = $(elm).offset().top - offset;
+            $('html, body').animate({ scrollTop: top }, 600);
+        });
+        $(window).scroll(function () {
+            var top = $('#nav').offset().top;
+            if (top > 150) {
+                $('#nav').addClass('minimize');
+            } else if (top === 0) {
+                $('#nav').removeClass('minimize');
+            }
+        });
+//        ---- end jquery
         var self = this;
         self.init = function () {
             self.selectedCategory = undefined;
@@ -28,6 +45,7 @@
             self.apiListPage();
             self.apiListCategory();
             self.apiListProduct();
+            self.apiListPost();
         };
         self.apiListSlide = function () {
             $http.get('/api/slide/list').then(function successCallback(response) {
@@ -110,6 +128,17 @@
             }, function errorCallback(response) {
                 self.contactSubmitting = false;
             });
+        };
+        self.apiListPost = function () {
+            $http.get('/api/post/list').then(function successCallback(response) {
+                self.posts = response.data;
+            }, function errorCallback(response) {
+            });
+        };
+        self.detailPost = function (e, index) {
+            e.preventDefault();
+            self.selectedPost = index;
+            $('#post-detail').modal('show');
         };
         self.changeLanguage = function (lang) {
             $window.location.href = '/location?lang=' + lang + '&return=' + $location.path();

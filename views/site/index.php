@@ -86,7 +86,7 @@ use app\assets\AppAsset;
                     <ul class="clearfix">
                         <li><a href="#" ng-click="main.setCategory($event)"><?= Yii::t('app', 'All') ?></a></li>
                         <li ng-repeat="category in main.categories">
-                            <a href="#" ng-click="main.setCategory($event, category.id)">{{ category.title}}</a>
+                            <a href="#" ng-click="main.setCategory($event, category.id)">{{ category.title }}</a>
                         </li>
                     </ul>
                 </div>
@@ -99,10 +99,10 @@ use app\assets\AppAsset;
                 <div class="col-md-6 col-lg-4" ng-repeat="product in main.filtered = (main.products| filter:{category_id: main.selectedCategory})"
                      ng-if="$index >= main.pageIndex && $index < main.pageIndex + main.pageSize">
                     <a href="#" class="product-item" ng-click="main.detailProduct($event, $index)">
-                        <img ng-src="{{ product.thumbnail}}" class="img-fluid">
+                        <img ng-src="{{ product.thumbnail }}" class="img-fluid">
                         <div class="hover-content animated fadeIn">
                             <div class="wrapper">
-                                <h4 class="title">{{ product.title}}</h4>
+                                <h4 class="title">{{ product.title }}</h4>
                                 <div>
                                     <span class="logo-btn"></span><br>
                                     <?= Yii::t('app', 'View more') ?>
@@ -121,14 +121,30 @@ use app\assets\AppAsset;
         <p class="partners-content text-24">{{ main.pages[3].summary }}</p>
     </div>
 </div>
-<div class="news" style="background-image: url('{{ main.pages[4].thumbnail }}')">
+<div class="news">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="news-content text-xs-center">
-                    <p class="heading">{{ main.pages[4].title }}</p>
-                    <p>{{ main.pages[4].summary }}</p>
-                    <a href="#" ng-click="main.detailPage($event, 4)" class="logo-btn"></a>
+        <p class="text-44 text-xs-center"><b>{{ main.pages[4].title }}</b></p>
+        <div class="row post-content">
+            <div class="col-sm-6 hidden-sm-down left-post">
+                <a href="#" ng-click="main.detailPost($event, 0)">
+                    <img ng-src="{{ main.posts[0].thumbnail }}" class="img-fluid">
+                    <div class="info">
+                        <div class="title text-18">{{ main.posts[0].title }}</div>
+                        <span class="text-16">{{ main.posts[0].summary }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 right-post">
+                <div class="row post-item" ng-repeat="post in main.posts" ng-class="{'hidden-md-up': $index === 0}">
+                    <div class="col-sm-4">
+                        <a href="#" ng-click="main.detailPost($event, $index)">
+                            <img ng-src="{{ post.thumbnail }}" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="title text-18">{{ post.title }}</div>
+                        <span class="text-16">{{ post.summary }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -267,6 +283,25 @@ use app\assets\AppAsset;
         </div>
     </div>
 </div>
+<div class="modal fade" id="post-detail" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{ main.posts[main.selectedPost].title}}</h4>
+            </div>
+            <div class="modal-body">
+                <em>{{ main.posts[main.selectedPost].summary}}</em>
+                <div ng-bind-html="main.posts[main.selectedPost].content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?= Yii::t('app', 'Close') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $this->registerJsFile('http://maps.googleapis.com/maps/api/js', ['depends' => AppAsset::className()]);
 $this->registerJs("
@@ -287,27 +322,4 @@ $this->registerJs("
         });
     }
     google.maps.event.addDomListener(window, 'load', initialize);
-    
-    $('.news').waypoint(function(direction) {
-        if (direction === 'down') {
-            $('.news-content').addClass('animated slideInUp');
-        }
-    }, {
-        offset: 380
-    });
-    $('.p-nav-item .nav-link').click(function (e) {
-        e.preventDefault();
-        var elm = $(this).attr('href');
-        var offset = $('#nav').height() + 8;
-        var top = $(elm).offset().top - offset;
-        $('html, body').animate({ scrollTop: top }, 600);
-    });
-    $(window).scroll(function () {
-        var top = $('#nav').offset().top;
-        if (top > 150) {
-            $('#nav').addClass('minimize');
-        } else if (top === 0) {
-            $('#nav').removeClass('minimize');
-        }
-    });
 ");
